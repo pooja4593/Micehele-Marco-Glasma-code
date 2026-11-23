@@ -4,6 +4,7 @@ z_jobfileID.pid
 *.csv
 *.png
 *.log
+*.pdf
 
 # Folders and file extensions
 evolutionaverage
