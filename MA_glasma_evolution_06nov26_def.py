@@ -47,48 +47,70 @@ except ImportError:
     print("⚠️ scipy.fft not available, using numpy.fft backend")
 
 
+## Physical constants
+## Costanti fisiche
+hbarc = 0.1973269804                   # Reduced Planck constant times speed of light   [GeV·fm]
+
+
 # =============================================================================
+# GLOBAL PARAMETERS from glasma_config.py
 # PARAMETRI GLOBALI da glasma.config.py
 # =============================================================================
 
-tau_start = cfg.tau_start
-tf = cfg.tf
-n_steps = cfg.n_steps
+tau_start = cfg.tau_start              # Initial proper time   [fm]
+tf = cfg.tf                            # Final proper time   [fm]
+n_steps = cfg.n_steps                  # Number of time steps
 
-step_interval = cfg.step_interval   # misura l'intervallo per gli step di scrittura in CYM evolution
-step_target = cfg.step_target    # step temporale per calcolare quantità 3D
+step_interval = cfg.step_interval      # Interval between output-writing steps in the CYM evolution   [Number of steps]
+                                       # misura l'intervallo per gli step di scrittura in CYM evolution
+step_target = cfg.step_target          # Time step at which 3D quantities are computed   [Step index]
+                                       # step temporale per calcolare quantità 3D
 
-Npart_p = cfg.Npart_p     # numero di partecipanti nel proiettile p (per protone Npart_p=1)
-Npart_A = cfg.Npart_A     # numero di partecipanti nel proiettile A (per nucleo vedi tabella)
+Npart_p = cfg.Npart_p                  # Number of participants in projectile p (for a proton Npart_p=1)
+                                       # numero di partecipanti nel proiettile p (per protone Npart_p=1)
+Npart_A = cfg.Npart_A                  # Number of participants in projectile A (for a nucleus see table)
+                                       # numero di partecipanti nel proiettile A (per nucleo vedi tabella)
 
-i_fluct = cfg.i_fluct                  # modello per la fluctuation strength
-Delta = cfg.Delta                      # parametro libero Delta proporzionale alla fluctuation strength
-tau_fluct_start = cfg.tau_fluct_start  # tempo a cui si attacca la fluttuazione
-i_variance = cfg.i_variance            # modello per generazione fluttuazioni sul piano trasverso
-lambdas= cfg.lambdas                   # correlation length esponenziale (i_fluct=4)
+i_fluct = cfg.i_fluct                  # Model for the fluctuation strength
+                                       # modello per la fluctuation strength
+Delta = cfg.Delta                      # Free parameter Delta, proportional to the fluctuation strength   [Dimensionless]
+                                       # parametro libero Delta proporzionale alla fluctuation strength
+tau_fluct_start = cfg.tau_fluct_start  # Time at which the fluctuation is switched on   [fm]
+                                       # tempo a cui si attacca la fluttuazione
+i_variance = cfg.i_variance            # Model for generating fluctuations in the transverse plane
+                                       # modello per generazione fluttuazioni sul piano trasverso
+lambdas= cfg.lambdas                   # Exponential correlation length in rapidity (i_fluct=4)   [Dimensionless]
+                                       # correlation length esponenziale (i_fluct=4)
 
 
-Nsheets = cfg.Nsheets    # NUMBER of SHEETS
+Nsheets = cfg.Nsheets                  # NUMBER of SHEETS
 
+## Transverse lattice parameters
 ## Parametri del reticolo trasverso
-Lx = cfg.Lx
-Ly = cfg.Ly   # Dimensioni fisiche in fm
-Nx = cfg.Nx     # Numero di punti nel piano trasverso
-Ny = cfg.Ny
+Lx  =  cfg.Lx                           # Physical x dimension of the transverse box   [fm]
+Ly  =  cfg.Ly                           # Physical y dimension of the transverse box   [fm]
+                                        # Dimensioni fisiche in fm
+
+Nx  =  cfg.Nx                           # Number of points in the x-direction of transverse plane
+                                        # Numero di punti nel piano trasverso
+Ny  =  cfg.Ny
 
 
+## Parameters for the rapidity axis η
 ## Parametri per l'asse di rapidità η
-Leta = cfg.Leta
-N_eta = cfg.N_eta              # Numero di punti in η (1 per boost-invarianza)
+Leta   =  cfg.Leta
+N_eta  =  cfg.N_eta                     # Number of points in rapidity direction, η 
+                                        # 1 for boost invariance
+                                        # Numero di punti in η (1 per boost-invarianza)
 
-
-## IR regulator 
-mIR = cfg.mIR  # GeV
+## IR regulator
+mIR  =  cfg.mIR                         # IR regulator mass   [GeV]
 
 
 #-------------------------------------------------------
+##    MISCELLANEOUS SWITCHES
 ##    CONTROLLI VARI
-i_plot = cfg.i_plot        
+i_plot = cfg.i_plot
 
 i_plot_finale = cfg.i_plot_finale
 
@@ -103,18 +125,17 @@ iter_OR = cfg.ITER_OR
 
  
 
-NHQ = cfg.NHQ
-plot_hqs = cfg.plot_hq
+NHQ = cfg.NHQ                                   # Number of HQs
+plot_hqs = cfg.plot_hq                          # Plotting for HQs: Yes/No
 
-init_mom_space = cfg.init_mom_space
-hq_flavor = cfg.hq_flavor
-mass_HQ = cfg.mass_HQ
-## Costanti fisiche
-hbarc = 0.1973269804  # GeV·fm
+init_mom_space = cfg.init_mom_space             # Initial momentum distribution
 
-mass_HQ =  mass_HQ / hbarc
+hq_flavor = cfg.hq_flavor                       # Charm, Beauty...
 
-tau_form = 1 / ( 2 * mass_HQ)
+mass_HQ  =  cfg.mass_HQ                         # Mass of HQ   [GeV]
+mass_HQ  =  mass_HQ / hbarc                     # Mass of HQ   [fm⁻¹]
+
+tau_form = 1 / ( 2 * mass_HQ)                   # Formation time of HQ   [fm]
 #tau_form = 0.02 #fm/c
 
 #-------------------------------------------------------
@@ -123,56 +144,116 @@ tau_form = 1 / ( 2 * mass_HQ)
 #==============================================================================
 
 
-Nhotspots_p = 3 * Npart_p
-Nhotspots_A = 3 * Npart_A
+Nhotspots_p = 3 * Npart_p  # 3 hotspots per participant in projectile p
+Nhotspots_A = 3 * Npart_A  # 3 hotspots per participant in projectile A
 
-t0 = tau_start
-dt = (tf-t0)/n_steps
+t0 = tau_start             # Initial proper time   [fm]
+dt = (tf-t0)/n_steps       # Time step   [fm]
 
 
-a_perp = Lx / Nx           # Passo reticolare in fm
-a_eta = Leta/N_eta           # Passo reticolare in η
+a_perp = Lx / Nx           # Lattice spacing in transverse directions, x, y  [fm]
+                           # Passo reticolare in fm
+
+a_eta = Leta/N_eta         # Lattice spacing in longitudinal direction, η   [Dimensionless, always]
+                           # Passo reticolare in η
 
 #==============================================================================
 #==============================================================================
 
 
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
+## QCD parameters
 ## Parametri QCD
-Nc = 3                 # Numero di colori
-alpha_s = 0.3          # Costante di accoppiamento forte
-g = np.sqrt(4 * np.pi * alpha_s)  # Costante di accoppiamento di QCD
-g = 2
+Nc  =  3                                # Number of colors   [Dimensionless]
+                                        # Numero di colori
 
-mIRfm=mIR / hbarc     # IR regulator in 1/fm
+alpha_s  =  0.3                         # Strong coupling constant   [Dimensionless]
+                                        # Costante di accoppiamento forte
 
-#==============================================================================
-#==============================================================================
+g  =  np.sqrt(4 * np.pi * alpha_s)      # QCD coupling constant   [Dimensionless]
+                                        # Costante di accoppiamento di QCD
+g  =  2                                 # NOTE: Overrides the value above, g = 2 is what is actually used   [Dimensionless]
+
+mIRfm  =  mIR / hbarc                   # IR regulator mass   [fm⁻¹]
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
 
+
+# *************************************************************************************************************************************************************** #
+# *************************************************************************************************************************************************************** #
+## Centred physical coordinates in x, y
 ## Coordinate fisiche centrate
-x = (np.arange(Nx) - Nx//2) * a_perp
-y = (np.arange(Ny) - Ny//2) * a_perp
-X, Y = np.meshgrid(x, y, indexing='ij')
+#
+# Lattice index i = 0, 1, ..., Nx-1 is shifted by Nx//2 so that 
+# the origin (x = 0) sits at the centre of the transverse box.
+#  With Nx = 64, the indices run from -32 to 31, so x goes from -Lx/2 to Lx/2 - a_perp
+#  The grid is periodic, so +Lx/2 would coincide with -Lx/2.
+x = (np.arange(Nx) - Nx//2) * a_perp                # Transverse x coordinates of the lattice sites   [fm]
+y = (np.arange(Ny) - Ny//2) * a_perp                # Transverse y coordinates of the lattice sites   [fm]
+
+# 2D grids of the coordinates, shape (Nx, Ny).
+# indexing='ij' means the first array index is x and the second is y:
+# X[i, j] = x[i] and Y[i, j] = y[j], matching field arrays indexed as [ix, iy].
+X, Y = np.meshgrid(x, y, indexing='ij')             # Coordinate of every lattice site   [fm]
+
+
+
+## Centred physical coordinates in η
 ## Coordinate fisiche centrata in η
-eta_phys = (np.arange(N_eta) - N_eta//2) * a_eta
-neta_zero = np.argmin(np.abs(eta_phys))  # trova l'indice con |eta_phys| minimo
+#
+# Same centring along the rapidity axis. With N_eta = 1 (boost invariance)
+# this gives a single point, eta_phys = [0].
+eta_phys = (np.arange(N_eta) - N_eta//2) * a_eta    # Rapidity coordinates of the lattice sites   [Dimensionless]
 
-#==============================================================================
-#==============================================================================
+neta_zero = np.argmin(np.abs(eta_phys))             # Index of the η slice closest to η = 0 (mid-rapidity); used to take the η = 0 slice of the fields for the spectrum   [Index]
+                                                    # trova l'indice con |eta_phys| minimo
 
+# *************************************************************************************************************************************************************** #
+# *************************************************************************************************************************************************************** #
+
+
+
+# =========================================================================================================
+# =========================================================================================================
+"""
+Check reference for parameters: 
+Elliptic flow of charm quarks produced in the early stage of pA collisions
+Gabriele Parisi, Fabrizio Murgana, Vincenzo Greco, Marco Ruggieri
+PHYSICAL REVIEW D 113, 054033 (2026)
+        https://journals.aps.org/prd/pdf/10.1103/9dgl-l9qs
+"""
+## Nucleus (A) parameters
 ## Parametri del nucleo (A)
-mu_A = cfg.mu_A             # Valore tipico di μ per il nucleo in GeV
-mu_A_fm = mu_A / hbarc  # Valore tipico di μ per il nucleo in 1/fm
+mu_A = cfg.mu_A         # Typical value of μ for the nucleus   [GeV]	
+                        # Valore tipico di μ per il nucleo in GeV
 
+mu_A_fm = mu_A / hbarc  # Typical value of μ for the nucleus   [fm⁻¹]	
+                        # Valore tipico di μ per il nucleo in 1/fm
+
+
+
+## Parameters for the Tp (thickness functions)
 ## Parametri per le Tp
-B_cq = 4.0 * hbarc**2  # fm²
-B_q = 0.3 * hbarc**2   # fm²
-# B_q = 0.9 * hbarc**2   # fm²
-c = 1.25                # Fattore proporzionale tra Q_s e gμ
-xg = 3.94         # Valore efficace per  xg(x, Q₀²) 
+B_cq_GeV  =  4.0            # Constituent-quark / hotspot distribution width in the proton   [GeV⁻²]
+B_q_GeV   =  0.3            # Width of a single hotspot   [GeV⁻²]
 
-#==============================================================================
-#==============================================================================
+B_cq  =  B_cq_GeV * hbarc**2   # [fm²] 
+B_q   =  B_q_GeV * hbarc**2    # [fm²]
+# B_q = 0.9 * hbarc**2  # [fm²]
+
+
+c = 1.25                # Proportionality factor between Q_s and gμ   [Dimensionless]
+                        # Fattore proporzionale tra Q_s e gμ
+                        # Qₛ = 0.8 * g²μ        # g²μ = 1.25 * Qₛ
+
+
+xg = 3.94               # Effective value for xg(x, Q₀²)   [Dimensionless]
+                        # Valore efficace per xg(x, Q₀²)
+
+# =========================================================================================================
+# =========================================================================================================
 
 #------------------------------------------------------------------------------
 # FUNCTIONS
@@ -182,7 +263,7 @@ if len(sys.argv) == 3:
     nrun = int(sys.argv[1])
     NRUNTOT = int(sys.argv[2])
 else:
-    print("⚠️ Nessun argomento passato, uso nrun=0, NRUNTOT=1 per test/profiling.")
+    print("⚠️ No arguments passed, using nrun=0, NRUNTOT=1 for test/profiling / Nessun argomento passato, uso nrun=0, NRUNTOT=1 per test/profiling.")
     nrun = 0
     NRUNTOT = 1
 
@@ -206,18 +287,74 @@ def get_better_seed(nrun=None):
 
 
 
-
-
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
 def generate_Tp(NHS):
-    Tp = np.zeros_like(X)
-    quark_positions = []
+    """ COMMENTS BY POOJA: Need to be checked
+    Generate the transverse thickness function Tp(x, y) of one projectile
+    in the hotspot model, for a single event.
+
+    See Eqs. (3) and (4) of paper:  
+            Elliptic flow of charm quarks produced in the early stage of pA collisions
+            Gabriele Parisi, Fabrizio Murgana, Vincenzo Greco, Marco Ruggieri
+            PHYS. REV. D 113, 054033 (2026) 
+
+    Model
+    -----
+    The projectile is made of NHS hotspots (3 per participant:
+    Nhotspots = 3 * Npart).
+    1. The centre (x_i, y_i) of each hotspot is drawn at random from a 2D
+       Gaussian centred at the origin, with variance B_cq in each direction
+       (standard deviation sqrt(B_cq) ≈ 0.39 fm). This sets the overall
+       size of the projectile and makes the shape fluctuate from event to event.
+    2. Each hotspot is itself a 2D Gaussian with variance B_q
+       (standard deviation sqrt(B_q) ≈ 0.11 fm):
+           exp(-[(x - x_i)² + (y - y_i)²] / (2 B_q))
+    3. All hotspots are summed and the result is divided by NHS · 2π B_q.
+       Each Gaussian integrates to 2π B_q, so the final Tp satisfies
+           ∫ Tp(x, y) dx dy = 1
+       i.e. Tp is normalised to one. The caller then multiplies it by
+       Npart_p or Npart_A, so that ∫ Tp = Npart.
+
+    Note: for the nucleus (projectile 2) the same function is used, so
+    its 3*Npart_A hotspots are also spread with width B_cq around the
+    origin; nucleon positions are not sampled separately.
+
+    Input
+    -----
+    NHS : int
+        Number of hotspots (Nhotspots_p or Nhotspots_A)   [Dimensionless]
+
+    Uses (global)
+    -------------
+    X, Y : 2D coordinate grids of the lattice, shape (Nx, Ny)   [fm]
+    B_cq : Variance of the hotspot-centre distribution   [fm²]
+    B_q  : Variance of a single hotspot   [fm²]
+    np.random : Global NumPy random generator (not seeded inside this function)
+
+    Returns
+    -------
+    Tp : 2D array, shape (Nx, Ny)
+        Thickness function on the lattice, normalised to 1   [fm⁻²]
+    quark_positions : list of (x_i, y_i) tuples
+        Centres of the NHS hotspots   [fm]
+    """
+    Tp = np.zeros_like(X)                                       # Empty thickness function on the lattice   [fm⁻²]
+    
+    quark_positions = []                                        # Hotspot centres   [fm]
+    
     for _ in range(NHS):
-        x_i = np.random.normal(0.0, np.sqrt(B_cq))
-        y_i = np.random.normal(0.0, np.sqrt(B_cq))
+        x_i = np.random.normal(0.0, np.sqrt(B_cq))              # Random x of hotspot centre   [fm]
+        y_i = np.random.normal(0.0, np.sqrt(B_cq))              # Random y of hotspot centre   [fm]
         quark_positions.append((x_i, y_i))
-        Tp += np.exp(-((X - x_i)**2 + (Y - y_i)**2) / (2 * B_q))
-    Tp *= 1.0 / (NHS * 2 * np.pi * B_q)
+        
+        Tp += np.exp(-((X - x_i)**2 + (Y - y_i)**2) / (2 * B_q))  # Add one Gaussian hotspot   [Dimensionless]
+    
+    Tp *= 1.0 / (NHS * 2 * np.pi * B_q)                         # Normalise so that ∫ Tp d²x = 1   [fm⁻²]
+    
     return Tp, quark_positions
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
 
 
 
@@ -233,8 +370,10 @@ def compute_Qs_from_Tp(Tp):
     """
     prefactor = (2 * np.pi**2 / Nc) * alpha_s * xg
     Qs2 = prefactor * Tp
-    Qs = np.sqrt(Qs2)        # in 1/fm
+    Qs = np.sqrt(Qs2)                       #  [fm⁻¹]
     return Qs
+
+
 
 def compute_mu_from_Qs(Qs,i_proie):
     """
@@ -601,7 +740,10 @@ def compute_gauge_links(i_proiettile):
     
     # Ciclo per calcolare le Wilson lines e aggiornare V_total
     for ns in range(1, Nsheets + 1):
-        print(f"i_proiettile={i_proiettile}, ns={ns}")
+        # print(f"i_proiettile={i_proiettile}, ns={ns}")
+
+        if ns ==1 or ns == Nsheets+1:
+            print(f"i_projectile = {i_proiettile}, i_Sheet = {ns}")     
 
         
         # 2. Calcola Qs
@@ -1587,7 +1729,7 @@ def evolve_glasma(Ux, Uy, Ueta, Ex, Ey, Eeta,
         if step % 25 == 0 or step == n_steps - 1:
             
             perc = 100 * step / (n_steps - 1 + eps_perc)
-            print(f"\n[Main][Run {nrun}] Progresso: {step}/{n_steps}  ({perc:.1f}%)")
+            print(f"\n[Main][Run {nrun}] Progress / Progresso: {step}/{n_steps}  ({perc:.1f}%)")
             sys.stdout.flush()
 
 
@@ -1638,7 +1780,7 @@ def evolve_glasma(Ux, Uy, Ueta, Ex, Ey, Eeta,
                 np.savetxt(fileHQ, data, delimiter=",")
                 
                 print("----------------------------------")
-                print(f"FINAL HQs EVENTO {nrun}")
+                print(f"FINAL HQs EVENT / EVENTO {nrun}")
                 # print(f"q2: {np.mean(q2):.5f}, deviazione: {np.std(q2):.5e}")
                 print("----------------------------------")
             
@@ -1815,7 +1957,7 @@ def evolve_glasma(Ux, Uy, Ueta, Ex, Ey, Eeta,
                                 tau, a_perp, g, 
                                 tolle, iter_OR)
 
-            print(f"[step {step}] Calcolo spettro finale con tol = {tolle:.1e}")
+            print(f"[step {step}] Computing final spectrum / Calcolo spettro finale, tol = {tolle:.1e}")
 
 
         tau += dtau
@@ -2067,7 +2209,7 @@ def export_spatial_observables_eta0(x, y, epsilon, PT, PL, step):
                     PL[i, j, k] * hbarc**4
                 ])
 
-    print(f"[CSV] Salvato piano η=0 → {filename} (senza header)")
+    print(f"[CSV] Saved η=0 plane / Salvato piano η=0 → {filename} (no header / senza header)")
     
     
 def export_single_Tp(x, y, Tp, iproie):
@@ -2085,7 +2227,7 @@ def export_single_Tp(x, y, Tp, iproie):
                     y[j],
                     Tp[i, j]
                 ])
-    print(f"[CSV] Tp esportata in {nome_file}")
+    print(f"[CSV] Tp exported to / Tp esportata in {nome_file}")
     
 
 
@@ -2135,7 +2277,7 @@ def plot_rho_component(rho, a, X, Y, cmap="coolwarm", levels=50):
     - levels: numero di livelli nel contour
     """
     if a < 1 or a > 8:
-        raise ValueError("Indice colore a deve essere compreso tra 1 e 8")
+        raise ValueError("Color index a must be between 1 and 8 / Indice colore a deve essere compreso tra 1 e 8")
 
     plt.figure(figsize=(7, 6))
     cont = plt.contourf(X, Y, rho[a], levels=levels, cmap=cmap)
@@ -2158,7 +2300,7 @@ def plot_alpha_component(alpha, a, X, Y, cmap="coolwarm", levels=50):
     - levels: numero di livelli nel contour
     """
     if a < 1 or a > 8:
-        raise ValueError("Indice colore a deve essere compreso tra 1 e 8")
+        raise ValueError("Color index a must be between 1 and 8 / Indice colore a deve essere compreso tra 1 e 8")
 
     plt.figure(figsize=(7, 6))
     cont = plt.contourf(X, Y, alpha[a], levels=levels, cmap=cmap)
@@ -2199,11 +2341,11 @@ def check_wilson_unitarity(V):
         identity_check = np.allclose(np.dot(V[i, j], V_dagger), np.eye(3))  # Verifica che V * V† = I
         det_check = np.isclose(np.linalg.det(V[i, j]), 1)  # Verifica che det(V) = 1
 
-        print(f"Controllo punto ({i}, {j}):")
-        print(f"  V * V† = Identity? {'Sì' if identity_check else 'No'}")
-        print(f"  det(V) = 1? {'Sì' if det_check else 'No'}")
+        print(f"Checking point / Controllo punto ({i}, {j}):")
+        print(f"  V * V† = Identity? {'Yes / Sì' if identity_check else 'No'}")
+        print(f"  det(V) = 1? {'Yes / Sì' if det_check else 'No'}")
 
-    print("Controlli completati!")
+    print("Checks completed / Controlli completati!")
 
 
 def check_wilson_unitarity_full(V):
@@ -2242,7 +2384,7 @@ def check_wilson_unitarity_full(V):
 
     plt.show()
 
-    print("Controllo completato per tutte le matrici di Wilson.")
+    print("Check completed for all Wilson matrices / Controllo completato per tutte le matrici di Wilson.")
 
 
 
@@ -2265,7 +2407,7 @@ def test_su3_normalization(t_a):
             print(f"Tr(t^{a+1} t^{b+1}) = {trace_value:.5f}, Expected = {expected_value:.5f}")
             assert np.isclose(trace_value, expected_value), f"Errore nella normalizzazione di Tr(t^{a+1} t^{b+1})"
     
-    print("Test di normalizzazione delle tracce passato con successo!")
+    print("Trace normalization test passed / Test di normalizzazione delle tracce passato con successo!")
     
     
 
@@ -2277,7 +2419,7 @@ def print_Eeta_trace_stats(Eeta_trace):
     Eeta_real = np.real(Eeta_trace)
     # Eeta_imag = np.imag(Eeta_trace)
 
-    print("Statistiche per Eeta_trace (parte REALE):")
+    print("Statistics for Eeta_trace (REAL part) / Statistiche per Eeta_trace (parte REALE):")
     print(f"  Mean = {np.mean(Eeta_real) * hbarc**4} GeV$^4$")
     print(f"  Max  = {np.max(Eeta_real) * hbarc**4} GeV$^4$")
     print(f"  Min  = {np.min(Eeta_real) * hbarc**4} GeV$^4$")
@@ -2451,7 +2593,7 @@ def assert_parseval(rho_x, rho_k, tol=1e-10):
     rel_diff = abs(energy_x - energy_k) / energy_x
     if rel_diff > tol:
         raise AssertionError(
-            f"[Parseval ERROR] Energia non conservata: "
+            f"[Parseval ERROR] Energy not conserved / Energia non conservata: "
             f"x-space = {energy_x:.5e}, k-space = {energy_k:.5e}, "
             f"diff = {rel_diff:.2e}"
         )
@@ -2937,7 +3079,7 @@ def print_rho_stats(rho, a=1):
     - a: indice della componente colore da analizzare (1-8 per SU(3)).
     """
     if a < 1 or a >= rho.shape[0]:
-        raise ValueError(f"Indice colore a={a} non valido. Deve essere in [1, {rho.shape[0]-1}].")
+        raise ValueError(f"Invalid color index / Indice colore non valido a={a}. Must be in / Deve essere in [1, {rho.shape[0]-1}].")
 
     comp = rho[a]  # Seleziona la componente a
     
@@ -2947,7 +3089,7 @@ def print_rho_stats(rho, a=1):
     var_val = np.var(comp)
     var_comp = (g * mu_A_fm)**2  / (a_perp**2 * Nsheets)
 
-    print(f"Statistiche di rho^{a}(x,y):")
+    print(f"Statistics of / Statistiche di rho^{a}(x,y):")
     print(f"  Max = {max_val}")
     print(f"  Min = {min_val}")
     print(f"  Mean = {mean_val}")
@@ -3120,7 +3262,7 @@ def initialize_HQ_run(nrun):
             x2 = 3.07569
             x3 = 0.030156
         else:
-            raise ValueError("Flavor non valido. Usa 'charm' o 'beauty'.")
+            raise ValueError("Invalid flavor. Use 'charm' or 'beauty' / Flavor non valido. Usa 'charm' o 'beauty'.")
     
         # Funzione di densità non normalizzata
         def fonll_pt_dist(pt):
@@ -3653,7 +3795,7 @@ def evolve_Q_hq(XHQ, YHQ, etaHQ, PXHQ, PYHQ, PetaHQ, QHQ, Ex, Ey, Eeta, Ux, Uy, 
 #     nrun = int(sys.argv[1])
 #     NRUNTOT = int(sys.argv[2])
 # else:
-#     print("⚠️ Nessun argomento passato, uso nrun=0, NRUNTOT=1 per test/profiling.")
+#     print("⚠️ No arguments passed, using nrun=0, NRUNTOT=1 for test/profiling / Nessun argomento passato, uso nrun=0, NRUNTOT=1 per test/profiling.")
 #     nrun = 0
 #     NRUNTOT = 1
 
@@ -3699,7 +3841,7 @@ if cfg.HQUARKS.lower() == "yes":
     np.savetxt(fileHQ, data, delimiter=",")
     
     print("----------------------------------")
-    print(f"INIIALIZZAZIONE HQs EVENTO {nrun}")
+    print(f"HQs INITIALIZATION EVENT / INIIALIZZAZIONE HQs EVENTO {nrun}")
     # print(f"q2: {np.mean(q2):.5f}, deviazione: {np.std(q2):.5e}")
     print("----------------------------------")
     

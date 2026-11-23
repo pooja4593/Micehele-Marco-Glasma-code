@@ -96,7 +96,7 @@ def calculate_v2_2pc_event(kx, ky, w, kT_bins, n=2, pref_min=1.0, pref_max=6.0):
 
     vn_2pc = VnDelta / np.sqrt(VnDelta_refref) if VnDelta_refref > 0 else np.full(nbins, np.nan)
 
-    print(f"Evento: VnDelta_refref = {VnDelta_refref:.6f}, N_ref_g = {N_ref_g}")
+    print(f"Event / Evento: VnDelta_refref = {VnDelta_refref:.6f}, N_ref_g = {N_ref_g}")
     
 
     return vn_2pc, VnDelta_refref
@@ -135,7 +135,7 @@ if vn_all.size == 0:
 
 vn_mean = np.nanmean(vn_all, axis=0)
 vn_err  = np.nanstd(vn_all, axis=0, ddof=1) / np.sqrt(len(vn_all))
-print(f"Numero eventi validi per bin: {np.sum(~np.isnan(vn_all), axis=0)}")
+print(f"Number of valid events per bin / Numero eventi validi per bin: {np.sum(~np.isnan(vn_all), axis=0)}")
 
 # save results
 out = np.column_stack((kT_centers, vn_mean, vn_err))

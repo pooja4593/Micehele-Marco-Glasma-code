@@ -157,7 +157,7 @@ out = pd.DataFrame({
     'v1_EP_err':    v1_EP_err
 })
 out.to_csv(os.path.join(out_dir, f'v1_kT_{number_events}.csv'), index=False)
-print(f"Risultati salvati in vn_gluoni/v1_kT_{number_events}.csv")
+print(f"Results saved to / Risultati salvati in vn_gluoni/v1_kT_{number_events}.csv")
 
 
 #------------------------------------------------------------------------------
@@ -176,7 +176,7 @@ out = pd.DataFrame({
     'v2_EP_err':    v2_EP_err
 })
 out.to_csv(os.path.join(out_dir, f'v2_kT_{number_events}.csv'), index=False)
-print(f"Risultati salvati in vn_gluoni/v2_kT_{number_events}.csv")
+print(f"Results saved to / Risultati salvati in vn_gluoni/v2_kT_{number_events}.csv")
 
 #------------------------------------------------------------------------------
 # scrittura file v3
@@ -194,7 +194,7 @@ out = pd.DataFrame({
     'v3_EP_err':    v3_EP_err
 })
 out.to_csv(os.path.join(out_dir, f'v3_kT_{number_events}.csv'), index=False)
-print(f"Risultati salvati in vn_gluoni/v3_kT_{number_events}.csv")
+print(f"Results saved to / Risultati salvati in vn_gluoni/v3_kT_{number_events}.csv")
 
 #------------------------------------------------------------------------------
 # scrittura file v4
@@ -212,7 +212,7 @@ out = pd.DataFrame({
     'v4_EP_err':    v4_EP_err
 })
 out.to_csv(os.path.join(out_dir, f'v4_kT_{number_events}.csv'), index=False)
-print(f"Risultati salvati in vn_gluoni/v4_kT_{number_events}.csv")
+print(f"Results saved to / Risultati salvati in vn_gluoni/v4_kT_{number_events}.csv")
 
 #------------------------------------------------------------------------------
 # scrittura file v5
@@ -230,7 +230,7 @@ out = pd.DataFrame({
     'v5_EP_err':    v5_EP_err
 })
 out.to_csv(os.path.join(out_dir, f'v5_kT_{number_events}.csv'), index=False)
-print(f"Risultati salvati in vn_gluoni/v5_kT_{number_events}.csv")
+print(f"Results saved to / Risultati salvati in vn_gluoni/v5_kT_{number_events}.csv")
 
 
 #------------------------------------------------------------------------------
@@ -249,7 +249,7 @@ out = pd.DataFrame({
     'v6_EP_err':    v6_EP_err
 })
 out.to_csv(os.path.join(out_dir, f'v6_kT_{number_events}.csv'), index=False)
-print(f"Risultati salvati in vn_gluoni/v6_kT_{number_events}.csv")
+print(f"Results saved to / Risultati salvati in vn_gluoni/v6_kT_{number_events}.csv")
 
 
 #------------------------------------------------------------------------------
@@ -268,7 +268,7 @@ out = pd.DataFrame({
     'v7_EP_err':    v7_EP_err
 })
 out.to_csv(os.path.join(out_dir, f'v7_kT_{number_events}.csv'), index=False)
-print(f"Risultati salvati in vn_gluoni/v7_kT_{number_events}.csv")
+print(f"Results saved to / Risultati salvati in vn_gluoni/v7_kT_{number_events}.csv")
 
 
 #==============================================================================
@@ -366,7 +366,7 @@ out = pd.DataFrame({
     'v1_EP_err':    v1_EP_err
 })
 out.to_csv(os.path.join(out_dir, f'v1_kT_{number_events}_SENZACUT.csv'), index=False)
-print(f"Risultati salvati in vn_gluoni/v1_kT_{number_events}_SENZACUT.csv")
+print(f"Results saved to / Risultati salvati in vn_gluoni/v1_kT_{number_events}_SENZACUT.csv")
 
 
 #------------------------------------------------------------------------------
@@ -385,7 +385,7 @@ out = pd.DataFrame({
     'v2_EP_err':    v2_EP_err
 })
 out.to_csv(os.path.join(out_dir, f'v2_kT_{number_events}_SENZACUT.csv'), index=False)
-print(f"Risultati salvati in vn_gluoni/v2_kT_{number_events}_SENZACUT.csv")
+print(f"Results saved to / Risultati salvati in vn_gluoni/v2_kT_{number_events}_SENZACUT.csv")
 
 #------------------------------------------------------------------------------
 # scrittura file v3
@@ -403,7 +403,7 @@ out = pd.DataFrame({
     'v3_EP_err':    v3_EP_err
 })
 out.to_csv(os.path.join(out_dir, f'v3_kT_{number_events}_SENZACUT.csv'), index=False)
-print(f"Risultati salvati in vn_gluoni/v3_kT_{number_events}_SENZACUT.csv")
+print(f"Results saved to / Risultati salvati in vn_gluoni/v3_kT_{number_events}_SENZACUT.csv")
 
 #------------------------------------------------------------------------------
 # scrittura file v4
@@ -421,7 +421,7 @@ out = pd.DataFrame({
     'v4_EP_err':    v4_EP_err
 })
 out.to_csv(os.path.join(out_dir, f'v4_kT_{number_events}_SENZACUT.csv'), index=False)
-print(f"Risultati salvati in vn_gluoni/v4_kT_{number_events}_SENZACUT.csv")
+print(f"Results saved to / Risultati salvati in vn_gluoni/v4_kT_{number_events}_SENZACUT.csv")
 
 #------------------------------------------------------------------------------
 # scrittura file v5
@@ -439,7 +439,7 @@ out = pd.DataFrame({
     'v5_EP_err':    v5_EP_err
 })
 out.to_csv(os.path.join(out_dir, f'v5_kT_{number_events}_SENZACUT.csv'), index=False)
-print(f"Risultati salvati in vn_gluoni/v5_kT_{number_events}_SENZACUT.csv")
+print(f"Results saved to / Risultati salvati in vn_gluoni/v5_kT_{number_events}_SENZACUT.csv")
 
 #------------------------------------------------------------------------------
 # scrittura file v6
@@ -457,7 +457,7 @@ out = pd.DataFrame({
     'v6_EP_err':    v6_EP_err
 })
 out.to_csv(os.path.join(out_dir, f'v6_kT_{number_events}_SENZACUT.csv'), index=False)
-print(f"Risultati salvati in vn_gluoni/v6_kT_{number_events}_SENZACUT.csv")
+print(f"Results saved to / Risultati salvati in vn_gluoni/v6_kT_{number_events}_SENZACUT.csv")
 
 #------------------------------------------------------------------------------
 # scrittura file v7
@@ -475,7 +475,7 @@ out = pd.DataFrame({
     'v7_EP_err':    v7_EP_err
 })
 out.to_csv(os.path.join(out_dir, f'v7_kT_{number_events}_SENZACUT.csv'), index=False)
-print(f"Risultati salvati in vn_gluoni/v7_kT_{number_events}_SENZACUT.csv")
+print(f"Results saved to / Risultati salvati in vn_gluoni/v7_kT_{number_events}_SENZACUT.csv")
 
 
 #==============================================================================

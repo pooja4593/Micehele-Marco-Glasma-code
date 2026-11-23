@@ -2,6 +2,7 @@ import os
 
 
 
+# This empties the nohup.out file if it exists in the folder
 # questo svuota il file nohup.out in caso ci sia nella cartella
 try:
     open("nohup.out", "w").close()
@@ -20,12 +21,13 @@ sys.dont_write_bytecode = True
 
 
 
+# 🔥 Recursively delete all __pycache__ folders
 # 🔥 Elimina tutte le cartelle __pycache__ ricorsivamente
 for root, dirs, files in os.walk(".", topdown=False):
     for d in dirs:
         if d == "__pycache__":
             pycache_path = os.path.join(root, d)
-            print(f"🧹 Rimuovo cartella cache: {pycache_path}")
+            print(f"🧹 Removing cache folder / Rimuovo cartella cache: {pycache_path}")
             shutil.rmtree(pycache_path, ignore_errors=True)
             
           
@@ -37,59 +39,67 @@ import multiprocessing
 from glasma_config import NRUNTOT, i_cho_spe_anal, HQUARKS, email_send
  
 
+# ========== START TIMER ==========
 # ========== CRONOMETRO INIZIA ==========
 start_time = time.time()
-print("\n⏳ Avvio esecuzione completa...\n" + "="*60)
+print("\n⏳ Starting full run / Avvio esecuzione completa...\n" + "="*60)
 
+# ========== CLEANUP ==========
 # ========== PULIZIA ==========
-print("\n🧹 Pulizia pre-run...\n" + "="*60)
+print("\n🧹 Pre-run cleanup / Pulizia pre-run...\n" + "="*60)
 for f in glob.glob("theta_event*.txt"): os.remove(f)
 
 for f in glob.glob("log*.txt"):
-    print(f"  - Rimuovo file: {f}")
+    print(f"  - Removing file / Rimuovo file: {f}")
     os.remove(f)
     
 for ext in ["*.log", "*.pdf", "*.png", "*.csv", "*.dat"]:
     for f in glob.glob(ext):
-        print(f"  - Rimuovo file: {f}")
+        print(f"  - Removing file / Rimuovo file: {f}")
         os.remove(f)
 
+# .txt files produced by the heavy-quark v2 analysis scripts
+# (analisi_hqs_v2_VECCHIO.py and analisi_hqs_v2_oct26_def.py).
+# These scripts now write into v2_hq/: this block only removes
+# any files left in the main folder by previous runs.
+#
 # file .txt prodotti dagli script di analisi v2 degli heavy quarks
 # (analisi_hqs_v2_VECCHIO.py e analisi_hqs_v2_oct26_def.py).
 # Ora questi script scrivono in v2_hq/: il blocco serve solo a eliminare
 # eventuali file rimasti nella cartella principale da run precedenti.
-for pattern in ["v2_2PC_no_auto_results_*events.txt",   # VECCHIO
+for pattern in ["v2_2PC_no_auto_results_*events.txt",   # OLD / VECCHIO
                 "VnDelta_refref_media_*.txt",           # oct26_def
                 "VnDelta_refref_per_evento_*.txt",      # oct26_def
                 "VnDelta_vs_kT_*.txt",                  # oct26_def
                 "v2_rapportoMedie_*.txt"]:              # oct26_def
     for f in glob.glob(pattern):
-        print(f"  - Rimuovo file: {f}")
+        print(f"  - Removing file / Rimuovo file: {f}")
         os.remove(f)
 
 if os.path.exists("evolutionaverage"):
-    print("  - Rimuovo cartella: evolutionaverage")
+    print("  - Removing folder / Rimuovo cartella: evolutionaverage")
     shutil.rmtree("evolutionaverage")
 
 
 for folder in glob.glob("evolution_run*"):
     if os.path.isdir(folder):
-        print(f"  - Rimuovo cartella: {folder}")
+        print(f"  - Removing folder / Rimuovo cartella: {folder}")
         shutil.rmtree(folder)
 
 if os.path.exists("spectrum_event"):
-    print("  - Rimuovo cartella: spectrum_event")
+    print("  - Removing folder / Rimuovo cartella: spectrum_event")
     shutil.rmtree("spectrum_event")
 
+# Output folders for the gluon vn and the heavy-quark v2
 # cartelle di output del vn dei gluoni e del v2 degli heavy quarks
 for folder in ["vn_gluoni", "v2_hq"]:
     if os.path.exists(folder):
-        print(f"  - Rimuovo cartella: {folder}")
+        print(f"  - Removing folder / Rimuovo cartella: {folder}")
         shutil.rmtree(folder)
         
 log_run_dir = "log_run_events"
 if os.path.exists(log_run_dir):
-    print(f"  - Rimuovo cartella: {log_run_dir}")
+    print(f"  - Removing folder / Rimuovo cartella: {log_run_dir}")
     shutil.rmtree(log_run_dir)
 
 
@@ -99,8 +109,9 @@ hq_init_dir = "HQinitializations"
 if os.path.exists(hq_init_dir):
     for f in os.listdir(hq_init_dir):
         file_path = os.path.join(hq_init_dir, f)
-        if os.path.isfile(file_path):  # assicura che sia un file, non una subdirectory
-            print(f"  - Rimuovo file: {f}")
+        if os.path.isfile(file_path):  # Make sure it is a file, not a subdirectory
+                                       # assicura che sia un file, non una subdirectory
+            print(f"  - Removing file / Rimuovo file: {f}")
             os.remove(file_path)
 
 
@@ -108,13 +119,15 @@ anal_init_dir = "Analysis"
 if os.path.exists(anal_init_dir):
     for f in os.listdir(anal_init_dir):
         file_path = os.path.join(anal_init_dir, f)
-        if os.path.isfile(file_path):  # assicura che sia un file, non una subdirectory
-            print(f"  - Rimuovo file: {f}")
+        if os.path.isfile(file_path):  # Make sure it is a file, not a subdirectory
+                                       # assicura che sia un file, non una subdirectory
+            print(f"  - Removing file / Rimuovo file: {f}")
             os.remove(file_path)
 
         
-print("✅ Pulizia completata\n" + "="*60)
+print("✅ Cleanup completed / Pulizia completata\n" + "="*60)
 
+# ========== BUILT-IN PARALLELISM ==========
 # ========== PARALLELISMO INCORPORATO ==========
 # def run_glasma(nrun):
 #     subprocess.run([sys.executable, "glasma_main_whqs_16luglio2025.py",
@@ -123,13 +136,15 @@ print("✅ Pulizia completata\n" + "="*60)
     
 def run_glasma_with_log(nrun):
 
+    # Create the folder if it does not exist
     # Crea la cartella se non esiste
     log_dir = "log_run_events"
     os.makedirs(log_dir, exist_ok=True)
 
+    # Log file for the single run
     # File di log per il singolo run
     log_filename = os.path.join(log_dir, f"run_{nrun}.log")
-    print(f"▶️ [RUN {nrun}] Avvio... → log: {log_filename}")
+    print(f"▶️ [RUN {nrun}] Starting / Avvio... → log: {log_filename}")
 
 
 
@@ -151,15 +166,16 @@ def run_parallel_glasma():
     total_cores = multiprocessing.cpu_count()
     NCORES = max(1, total_cores - 2)
     NCORES = min(NCORES, NRUNTOT)
-    print(f"[INFO] Core logici totali: {total_cores}")
-    print(f"[INFO] Numero di core usati per il parallelo: {NCORES}")
+    print(f"[INFO] Total logical cores / Core logici totali: {total_cores}")
+    print(f"[INFO] Number of cores used in parallel / Numero di core usati per il parallelo: {NCORES}")
 
     Parallel(n_jobs=NCORES)(
         delayed(run_glasma_with_log)(nrun) for nrun in range(NRUNTOT)
     )
-    print("\n✅ Completato: glasma_main_parallel\n" + "="*60)
+    print("\n✅ Completed / Completato: glasma_main_parallel\n" + "="*60)
 
 
+# === Create folder for the initializations of U_totx, U_toty and E_eta ===
 # === Crea cartella per le inizializzazioni di U_totx U_toty ed E_eta ===
 os.makedirs(f"inizializzazioni_campi_gluoni", exist_ok=True)
 
@@ -168,9 +184,10 @@ os.makedirs(f"inizializzazioni_campi_gluoni", exist_ok=True)
 
 run_parallel_glasma()
 
+# ========== ANALYSIS STAGES ==========
 # ========== FASI DI ANALISI ==========
 def run_and_log(script_name, log_name):
-    print(f"\n▶️ Lancio {script_name}...\n{'='*60}")
+    print(f"\n▶️ Launching / Lancio {script_name}...\n{'='*60}")
     with open(log_name, "w") as logfile:
         process = subprocess.Popen(
             [sys.executable, script_name],
@@ -186,6 +203,7 @@ def run_and_log(script_name, log_name):
 
 run_and_log("analisi_obs_glasma.py", "analisi.log")
 
+# 3. Contour plot of Tp1 and Tp2
 # 3. Contourplot Tp1 e Tp2
 # run_and_log("contplotTp.py", "contplotTp.log")
 
@@ -208,12 +226,15 @@ run_and_log("analisi_vnep_gluoni.py", "analisi_vnep_gluoni.log")
 
      
 
+# ========== TOTAL TIME ==========
 # ========== TEMPO TOTALE ==========
 elapsed = time.time() - start_time
-print(f"\n🏁 Fine. Tutto completato in {int(elapsed // 60)} minuti e {int(elapsed % 60)} secondi.")
+print(f"\n🏁 Done. Everything completed in {int(elapsed // 60)} min {int(elapsed % 60)} s / Fine. Tutto completato in {int(elapsed // 60)} minuti e {int(elapsed % 60)} secondi.")
 
 #------------------------------------------------------------------------------
+# SEND EMAIL
 # MANDA EMAIL
+#
 # Optional: if email_sender = yes in glasma_config.py, then the orchestrator
 # sends an email at the end of the run
 #------------------------------------------------------------------------------
@@ -231,7 +252,9 @@ print(f"\n🏁 Fine. Tutto completato in {int(elapsed // 60)} minuti e {int(elap
 #         print("⚠️ ATTENZIONE: Il file .env non è presente nella cartella corrente.")
 #         print("   L'invio della mail è stato disabilitato per evitare errori.")
 #         print("   Per abilitare l'invio, crea un file .env con le variabili SMTP_USER e SMTP_PASS.")
+#         # Exit the program or continue without sending email, whichever you prefer:
 #         # Esci dal programma o continua senza invio email, a seconda di cosa preferisci:
+#         # To exit with an error:
 #         # Per uscire con errore:
 #         import sys
 #         sys.exit(1)
@@ -260,15 +283,20 @@ print(f"\n🏁 Fine. Tutto completato in {int(elapsed // 60)} minuti e {int(elap
     
     
 #     SMTP_SERVER = "smtp.libero.it"
-#     SMTP_PORT   = 465                       # SSL; usa 587 + STARTTLS se 465 desse problemi
+#     SMTP_PORT   = 465                       # SSL; use 587 + STARTTLS if 465 causes problems
+#                                             # SSL; usa 587 + STARTTLS se 465 desse problemi
 #     SMTP_USER   = os.environ["SMTP_USER"]   # glasma.sender@libero.it
 #     SMTP_PASS   = os.environ["SMTP_PASS"]    
     
 #     def manda_email_avviso(titolo, corpo, destinatario, allegati=None):
 #         """
+#         Sends an e-mail (attachments allowed) through the Libero account
+#         configured in the .env file
+#
 #         Spedisce un'e-mail (anche con allegati) tramite l’account Libero
 #         configurato nel file .env
 #         """
+#         # 1) envelope
 #         # 1) busta
 #         msg            = MIMEMultipart()
 #         msg["Subject"] = titolo
@@ -276,6 +304,7 @@ print(f"\n🏁 Fine. Tutto completato in {int(elapsed // 60)} minuti e {int(elap
 #         msg["To"]      = destinatario
 #         msg.attach(MIMEText(corpo))
     
+#         # 2) attachments (PNG, PDF, txt, …)
 #         # 2) allegati (PNG, PDF, txt, …)
 #         if allegati:
 #             for path in allegati:
@@ -287,6 +316,7 @@ print(f"\n🏁 Fine. Tutto completato in {int(elapsed // 60)} minuti e {int(elap
 #                 )
 #                 msg.attach(part)
     
+#         # 3) send via SMTP SSL
 #         # 3) invio via SMTP SSL
 #         with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
 #             server.login(SMTP_USER, SMTP_PASS)

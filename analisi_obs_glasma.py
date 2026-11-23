@@ -56,11 +56,11 @@ os.makedirs(folderave, exist_ok=True)   # Non fa nulla se la directory già esis
 # === Determina NSTEPS dal primo file (run 0) ===
 first_path = "evolution_run/evolution_run0/observables_vs_tau.csv"
 if not os.path.exists(first_path):
-    raise FileNotFoundError("Il file del run 0 non esiste: evolution_run/evolution_run0/observables_vs_tau.csv")
+    raise FileNotFoundError("Run 0 file does not exist / Il file del run 0 non esiste: evolution_run/evolution_run0/observables_vs_tau.csv")
 
 first_df = pd.read_csv(first_path, header=None)
 NSTEPS, NOBS = first_df.shape
-print(f"[INFO] File di riferimento: {NSTEPS} step temporali, {NOBS} osservabili.")
+print(f"[INFO] Reference file: {NSTEPS} time steps, {NOBS} observables / File di riferimento: {NSTEPS} step temporali, {NOBS} osservabili.")
 
 # Aggiungilo subito ai dataframe
 dataframes = [first_df]
@@ -81,7 +81,7 @@ for nrun, df in enumerate(dataframes):
 if dataframes:
     mean_df = sum(dataframes) / len(dataframes)
     mean_df.to_csv(fileaverage, index=False, header=False)  # qui scrive le medie
-    print("Media salvata in evolution_average.csv")
+    print("Mean saved to / Media salvata in evolution_average.csv")
     
     # === Calcolo e salvataggio della deviazione standard ===
     all_data = np.stack([df.values for df in dataframes])  # shape: (NRUN, Nstep, Nobs)
@@ -92,10 +92,10 @@ if dataframes:
 
     std_df = pd.DataFrame(std_array)
     std_df.to_csv("evolutionaverage/evolution_std.csv", index=False, header=False)
-    print("Deviazione standard salvata in evolution_std.csv")
+    print("Standard deviation saved to / Deviazione standard salvata in evolution_std.csv")
     
 else:
-    print("Nessun file trovato.")
+    print("No files found / Nessun file trovato.")
     
     
 #------------------------------------------------------------------------------
@@ -184,7 +184,7 @@ filenamepdf = "evolutionaverage/ave_eps2t_16x16.pdf"
 # Salvataggio in PNG ad alta risoluzione
 plt.savefig(filename, dpi=300)
 plt.savefig(filenamepdf, bbox_inches='tight')
-print(f"Grafico salvato in: {filename}")
+print(f"Plot saved to / Grafico salvato in: {filename}")
 
 
 # plt.show()
@@ -245,7 +245,7 @@ filenamepdf = "evolutionaverage/ave_eps2_16x16.pdf"
 # Salvataggio in PNG ad alta risoluzione
 plt.savefig(filename, dpi=300)
 plt.savefig(filenamepdf, bbox_inches='tight')
-print(f"Grafico salvato in: {filename}")
+print(f"Plot saved to / Grafico salvato in: {filename}")
 
 
 
@@ -315,7 +315,7 @@ filenamepdf = "evolutionaverage/ave_glasma_press.pdf"
 # Salvataggio in PNG ad alta risoluzione
 plt.savefig(filename, dpi=300)
 plt.savefig(filenamepdf, bbox_inches='tight')
-print(f"Grafico salvato in: {filename}")
+print(f"Plot saved to / Grafico salvato in: {filename}")
 
 
 
@@ -383,7 +383,7 @@ filenamepdf = "evolutionaverage/ave_glasma_plsupt.pdf"
 plt.savefig(filename, dpi=300)
 plt.savefig(filenamepdf, bbox_inches='tight')
 
-print(f"Grafico salvato in: {filename}")
+print(f"Plot saved to / Grafico salvato in: {filename}")
 
 
 
@@ -445,7 +445,7 @@ filenamepdf = "evolutionaverage/ave_glasma_campi.pdf"
 # Salvataggio in PNG ad alta risoluzione
 plt.savefig(filename, dpi=300)
 plt.savefig(filenamepdf, bbox_inches='tight')
-print(f"Grafico salvato in: {filename}")
+print(f"Plot saved to / Grafico salvato in: {filename}")
 
 
 # plt.show()

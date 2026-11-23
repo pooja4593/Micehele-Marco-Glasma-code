@@ -50,7 +50,7 @@ spectra_evt = []
 for nrun in range(NRUN):
     fileHQ = f"HQinitializations/XandP_tinit_{nrun}.csv"
     if not os.path.exists(fileHQ):
-        print(f"ATTENZIONE: file {fileHQ} non trovato, salto...")
+        print(f"WARNING: file {fileHQ} not found, skipping / ATTENZIONE: file {fileHQ} non trovato, salto...")
         continue
 
     data = np.loadtxt(fileHQ, delimiter=",")  # colonne: x, y, px [GeV], py [GeV]
@@ -75,14 +75,14 @@ out = pd.DataFrame({'pT[GeV]': pT_centres,
                     'stat_err': spec_err})
 out.to_csv("HQs_spectrum_radial.csv", index=False, header=False)
 
-print("Spettro HQ medio salvato in  HQs_spectrum_radial.csv")
+print("Average HQ spectrum saved to / Spettro HQ medio salvato in  HQs_spectrum_radial.csv")
 print(out.head())
 
 
 NTOT_HQs = np.sum(spec_mean) * delta_pT
-print(f"N HQs da spettro integrato = {NTOT_HQs}")
-print(f"N HQs da input = {NHQ}")
-print(f"Errore relativo: {100 * np.abs(NHQ - NTOT_HQs) / NHQ}%")
+print(f"N HQs from integrated spectrum / da spettro integrato = {NTOT_HQs}")
+print(f"N HQs from input / da input = {NHQ}")
+print(f"Relative error / Errore relativo: {100 * np.abs(NHQ - NTOT_HQs) / NHQ}%")
 
 
 
@@ -100,7 +100,7 @@ elif hq_flavor.lower() == "beauty":
      x2 = 3.07569
      x3 = 0.030156
 else:
-     raise ValueError("Flavor non valido. Usa 'charm' o 'beauty'.")
+     raise ValueError("Invalid flavor. Use 'charm' or 'beauty' / Flavor non valido. Usa 'charm' o 'beauty'.")
 
  # Funzione di densità non normalizzata
 def fonll_pt_dist(pt):
@@ -110,12 +110,12 @@ def fonll_pt_dist(pt):
 pT_min = 0.01
 pT_max = 10.0
 Norm, err = quad(fonll_pt_dist, pT_min, pT_max)
-print(f"Integrale FONLL fino a {pT_max} = {Norm:.4f}")
+print(f"FONLL integral up to / Integrale FONLL fino a {pT_max} = {Norm:.4f}")
 
 pT_min_test = 0.01
 pT_max_test = 5.0
 NormTEST, errTEST = quad(fonll_pt_dist, pT_min_test, pT_max_test)
-print(f"Integrale FONLL fino a {pT_max_test} = {NormTEST:.4f}")
+print(f"FONLL integral up to / Integrale FONLL fino a {pT_max_test} = {NormTEST:.4f}")
 
 # Funzione normalizzata a NHQ
 def fonll_pt_dist_NORM(pt):

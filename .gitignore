@@ -3,12 +3,19 @@ nohup.out
 z_jobfileID.pid
 *.csv
 *.png
+*.log
 
 # Folders and file extensions
-HQinitializations/
+evolutionaverage
 evolution_run/
-log_run_events/inizializzazioni_campi_gluoni/
 
+HQinitializations/ 
+inizializzazioni_campi_gluoni/
+
+log_run_events/
+spectrum_event/
+v2_hq/
+vn_gluoni/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

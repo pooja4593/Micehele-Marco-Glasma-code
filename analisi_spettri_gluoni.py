@@ -107,7 +107,7 @@ out.to_csv('spectrum_radial_average.csv',
            header=False)      # ← niente riga di header
 
 
-print("Spettro radiale medio salvato in  spectrum_radial_average.csv")
+print("Average radial spectrum saved to / Spettro radiale medio salvato in  spectrum_radial_average.csv")
 print(out.head())
 # ───────────────────────────────────────────────────────────────
 
