@@ -1,0 +1,3 @@
+NRUNTOT = 1
+NSTEPS = 400
+t0 = 0.02

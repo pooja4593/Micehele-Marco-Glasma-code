@@ -1,3 +1,15 @@
+# Specific files
+nohup.out
+z_jobfileID.pid
+*.csv
+*.png
+
+# Folders and file extensions
+HQinitializations/
+evolution_run/
+log_run_events/inizializzazioni_campi_gluoni/
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
